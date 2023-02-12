@@ -1,0 +1,119 @@
+namespace Level2
+{
+    internal class Program
+    {
+        public struct Jumper // структура участника
+        {
+            public string Surename;
+            public int Result;
+            
+            public Jumper(string surename, int result1, int result2, int result3) // конструктор участника, чтобы не писать каждый раз ввод данных вручную в коде
+            {
+                Surename = surename;
+                Result = Math.Max(result1, Math.Max(result2, result3)); // выбираем максимальный результат
+            }
+            
+            public void Print() // вывод данных
+            {
+                Console.WriteLine(Surename + " " + Result);
+            }
+        }
+        
+        public struct ChessPlayer // структура участника
+        {
+            public string Surename;
+            public double Result;
+            
+            public ChessPlayer(string surename, double[] results) // конструктор участника, чтобы не писать каждый раз ввод данных вручную в коде
+            {
+                Surename = surename;
+                Result = results.Sum(); // сумма результатов
+            }
+            
+            public void Print() // вывод данных
+            {
+                Console.WriteLine(Surename + " " + Result);
+            }
+        }
+        public static void Main(string[] args)
+        {
+            N7();
+        }
+
+        public static void N3() // Третье задание
+        {
+            Console.WriteLine("Введите количество участников");
+            var n = int.Parse(Console.ReadLine()); // ввод количество участников
+            var jumpers = new Jumper[n]; // создание массива участников
+            for (var i = 0; i < n; i++) // ввод данных участников
+            {
+                Console.WriteLine("Введите фамилию");
+                var surename = Console.ReadLine();
+                Console.WriteLine("Введите результаты");
+                var result1 = int.Parse(Console.ReadLine());
+                var result2 = int.Parse(Console.ReadLine());
+                var result3 = int.Parse(Console.ReadLine());
+                jumpers[i] = new Jumper(surename, result1, result2, result3);
+            }
+            
+            Jumper temp; // временная переменная для сортировки
+            for (var i = 0; i < n; i++) // сортировка пузырьком
+            {
+                for (var j = 0; j < n - 1; j++)
+                {
+                    if (jumpers[j].Result < jumpers[j + 1].Result)
+                    {
+                        temp = jumpers[j];
+                        jumpers[j] = jumpers[j + 1];
+                        jumpers[j + 1] = temp;
+                    }
+                }
+            }
+            Console.WriteLine("Результаты"); 
+            for (var i = 0; i < n; i++) // вывод результатов
+            {
+                Console.Write($"{i + 1}. ");
+                jumpers[i].Print();
+            }
+        }
+
+        public static void N7() // Седьмое задание
+        {
+            Console.WriteLine("Введите количество участников");
+            var n = int.Parse(Console.ReadLine()); // ввод количество участников
+            var chessPlayers = new ChessPlayer[n]; // создание массива участников
+            for (var i = 0; i < n; i++) // ввод данных участников
+            {
+                Console.WriteLine("Введите фамилию");
+                var surename = Console.ReadLine();
+                Console.WriteLine("Введите результаты");
+                var results = new double[6];
+                for (var j = 0; j < 6; j++) // ввод результатов
+                {
+                    results[j] = double.Parse(Console.ReadLine());
+                }
+                chessPlayers[i] = new ChessPlayer(surename, results); // создание участника
+            }
+            
+            ChessPlayer temp; // временная переменная для сортировки
+            for (var i = 0; i < n; i++) // сортировка пузырьком
+            {
+                for (var j = 0; j < n - 1; j++)
+                {
+                    if (chessPlayers[j].Result < chessPlayers[j + 1].Result)
+                    {
+                        temp = chessPlayers[j];
+                        chessPlayers[j] = chessPlayers[j + 1];
+                        chessPlayers[j + 1] = temp;
+                    }
+                }
+            }
+            Console.WriteLine("Результаты"); 
+            for (var i = 0; i < n; i++) // вывод результатов
+            {
+                Console.Write($"{i + 1}. ");
+                chessPlayers[i].Print();
+            }
+        }
+    }
+}
