@@ -1,0 +1,64 @@
+public struct Jumpers // структура участника
+        {
+            public string Name;
+            public int result1;
+            public int result2;
+
+            public
+                Jumpers(string name, int result1,
+                    int result2) // конструктор участника, чтобы не писать каждый раз ввод данных вручную в коде
+            {
+                Name = name;
+                this.result1 = result1; // this - чтобы не было конфликта с именем параметра
+                this.result2 = result2;
+            }
+
+            public void Print() // вывод данных
+            {
+                Console.WriteLine(Name);
+            }
+        }
+
+        public static void Main(string[] args)
+        {
+            N4(); // выбор задания(1 или 4)
+        }
+
+        public static void N4() // Четвертое задание
+        {
+            Console.WriteLine("Введите кол-во участников");
+            int n = int.Parse(Console.ReadLine());
+            var a = new Jumpers[n]; // массив участников
+            for (var i = 0; i < n; i++) // заполнение массива участников
+            {
+                Console.WriteLine("Введите имя участника");
+                string name = Console.ReadLine();
+                Console.WriteLine("Введите результаты");
+                int result1 = int.Parse(Console.ReadLine());
+                int result2 = int.Parse(Console.ReadLine());
+                a[i] = new Jumpers(name, result1, result2); // заполнение массива участников через конструктор
+            }
+
+            Jumpers temp; // временная переменная для сортировки
+            for (var i = 0; i < a.Length; i++) // сортировка массива участников по лучшему результату
+            {
+                for (var j = 0; j < a.Length; j++)
+                {
+                    if (a[j].result1 > a[i].result1 && a[j].result1 > a[i].result2 ||
+                        a[j].result2 > a[i].result1 && a[j].result2 > a[i].result2)
+                    {
+                        temp = a[i];
+                        a[i] = a[j];
+                        a[j] = temp;
+                    }
+                }
+            }
+
+            Array.Reverse(a); // переворачиваем массив, чтобы первым был лучший результат
+            Console.WriteLine("Результаты");
+            for (var i = 0; i < a.Length; i++) // вывод результатов
+            {
+                Console.Write($"{i + 1}. ");
+                a[i].Print();
+            }
+        }
